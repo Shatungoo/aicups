@@ -13,6 +13,7 @@ class WorldHandler(object):
         self.client_player = {}
         from core.api import API
         self.red_client = API()
+        from core.api2 import API
         self.blue_client = API()
 
     @staticmethod
@@ -27,7 +28,7 @@ class WorldHandler(object):
     def start(self):
         self.api.create_players(self.red_client, self.blue_client)
         for _ in range(0, self.ticks_count):
-            if _ % 100 == 0:
+            if _ % 1000 == 0:
                 print(_)
             blue_message = self.blue_client.generate_actions(
                 self.api.get_world_state_for(self.blue_client))
@@ -38,6 +39,8 @@ class WorldHandler(object):
             self.api.tick()
             self.result.append(self.api.get_visio_state())
         try:
+            json_str=str(self.result[-1]).split("scores': {")[1].split("}, 'waiting_passengers")[0]
+            print (json_str)
             self.write_result({
                 'config': settings.BUILDING_VISIO,
                 'game_data': self.result,

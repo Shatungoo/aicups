@@ -45,7 +45,7 @@ class Passenger:
         return self.elevator is not None
 
     def set_elevator(self, elevator: Elevator):
-        self.elevator = elevator
+        self.elevator = elevator.id
         self.add_action('set_elevator_to_passenger', {'passenger_id': self.id, 'elevator_id': elevator.id})
 
 
